@@ -8,7 +8,7 @@ let envVariableNames = Object.keys(process.env).map(key => key); // stores the e
 const workspacePath = process.env.GITHUB_WORKSPACE;
 console.log(`GitHub workspace path: ${workspacePath}`);
 
-// Change dir to runner home dir
+//Change dir to runner home dir
 try {
     process.chdir(workspacePath);
 } catch (err) {
@@ -31,8 +31,9 @@ function replaceEnvs(file){
     fs.readFile(file, 'utf-8', function (err, data) {
         let replaced = data;
         envVariableNames.forEach(envVariable => {
-            replaced.includes(envVariable) ?
-                replaced = replaced.replace(envVariable, process.env[envVariable])
+            let envVar = envVariable + "=";
+            replaced.includes(envVar) ?
+                replaced = replaced.replace(envVar, envVar + process.env[envVariable])
                 :
                 null;
         })
