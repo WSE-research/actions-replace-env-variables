@@ -5,9 +5,12 @@ const fs = require('fs');
 
 let envVariableNames = Object.keys(process.env).map(key => key); // stores the env variable names
 
+const workspacePath = process.env.GITHUB_WORKSPACE;
+console.log(`GitHub workspace path: ${workspacePath}`);
+
 // Change dir to runner home dir
 try {
-    process.chdir("/home/runner/work/");
+    process.chdir(workspacePath);
 } catch (err) {
     console.log(err);
 }
@@ -24,11 +27,14 @@ envFilePaths.forEach(envFile => {
  * Replaces all replaceable variables with the existing env vars
  * @param file path to .env-file
  */
-function replaceEnvs(file) {
+function replaceEnvs(file){
     fs.readFile(file, 'utf-8', function (err, data) {
         let replaced = data;
         envVariableNames.forEach(envVariable => {
-            replaced.includes(envVariable) ? replaced = replaced.replace(envVariable, process.env[envVariable]) : null;
+            replaced.includes(envVariable) ?
+                replaced = replaced.replace(envVariable, process.env[envVariable])
+                :
+                null;
         })
         fs.writeFile(file, replaced, function (err) {
             if (err) return console.log(err);
@@ -42,5 +48,6 @@ function findAllEnvFiles() {
     files.forEach(file => {
         file.endsWith(".env") ? foundEnvFiles.push(file) : null;
     })
+    console.log("Found .env-files: " + foundEnvFiles);
     return foundEnvFiles;
 }
