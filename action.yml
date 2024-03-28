@@ -6,4 +6,4 @@ outputs:
     description: 'Files where variables were replaced'
 runs:
   using: 'node20'
-  main: 'script.js'
+  main: './src/script.js'
