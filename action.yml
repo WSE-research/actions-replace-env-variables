@@ -1,0 +1,9 @@
+name: 'Replace environment variables action'
+description: 'This action takes all available env-variables from the the running GitHub action and replaces their occurencces in any .env-file'
+author: 'dschiese'
+outputs:
+  files:
+    description: 'Files where variables were replaced'
+runs:
+  using: 'node20'
+  main: 'script.js'
