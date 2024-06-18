@@ -5,7 +5,7 @@ const fs = require('fs');
 
 let envVariableNames = Object.keys(process.env).map(key => key); // stores the env variable names
 
-const workspacePath = process.env.GITHUB_WORKSPACE;
+const workspacePath = process.env[GITHUB_WORKSPACE];
 console.log(`GitHub workspace path: ${workspacePath}`);
 
 /**
@@ -14,7 +14,7 @@ console.log(`GitHub workspace path: ${workspacePath}`);
 try {
     process.chdir(workspacePath);
 } catch (err) {
-    console.log(err);
+    console.log("Failed to change dir");
 }
 
 let envFilePaths = findAllEnvFiles();
